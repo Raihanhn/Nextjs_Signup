@@ -1,5 +1,6 @@
 "use client";
 
+import { useToast } from "@/components/ui/use-toast";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -28,7 +29,7 @@ const FormSchema = z.object({
 
 const SignInForm = () => {
   const router = useRouter();
-
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -45,8 +46,13 @@ const SignInForm = () => {
     });
 
     if (signInData?.error) {
-      console.log(signInData.error);
+      toast({
+        title: "Error",
+        description: "Oops! Something went wrong",
+        variant: "destructive",
+      });
     } else {
+      router.refresh();
       router.push("/admin");
     }
   };

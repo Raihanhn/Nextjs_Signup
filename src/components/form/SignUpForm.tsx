@@ -1,5 +1,6 @@
 "use client";
 
+import { useToast } from "../ui/use-toast";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -34,6 +35,7 @@ const formSchema = z
 
 const SignUpForm = () => {
   const router = useRouter();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,7 +62,11 @@ const SignUpForm = () => {
     if (response.ok) {
       router.push("/sign-in");
     } else {
-      console.log("Registration failed");
+      toast({
+        title: "Error",
+        description: "Oops! Something went wrong",
+        variant: "destructive",
+      });
     }
   };
 
