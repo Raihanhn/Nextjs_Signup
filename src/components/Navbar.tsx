@@ -4,6 +4,7 @@ import { Button, buttonVariants } from "./ui/button";
 import { Sailboat } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import UserAccountnav from "./UserAccountnav";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
@@ -14,7 +15,7 @@ const Navbar = async () => {
           <Sailboat />{" "}
         </Link>
         {session?.user ? (
-          <Button variant={"destructive"}>Sign Out</Button>
+          <UserAccountnav />
         ) : (
           <Link className={buttonVariants()} href={"/sign-in"}>
             Sign in
